@@ -8,5 +8,26 @@
   <%= @article.description %>
 </p>
 
-<%= link_to 'Edit', edit_article_path(@article) %> |
-<%= link_to 'Back', articles_path %>
+<h2>Comments</h2>
+<% @article.comments.each do |comment| %>
+  <p>
+    <strong>Commenter:</strong>
+    <%= comment.commenter %>
+  </p>
+
+  <p>
+    <strong>Comment:</strong>
+    <%= comment.description %>
+  </p>
+<% end %>
+
+<% if user_signed_in? %>
+  <h2>Add a comment:</h2>
+  <%= render 'comments/form' %>
+
+  <%= link_to 'Edit', edit_article_path(@article) %> |
+  <%= link_to 'Back', articles_path %>
+<% else %>
+  <p><%= link_to('Login', new_user_session_path) %> to add comment</p>
+  <%= link_to 'Back', root_path %>
+<% end %>
